@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <stack>
 using namespace std;
 
 class Node
@@ -104,6 +105,70 @@ void postOrder(Node *root)
     cout << root->data << " ";
 }
 
+vector<int> inorderTraversal(Node *root)
+{
+    vector<int> inOrder;
+    stack<Node *> st;
+
+    if (!root)
+        return inOrder;
+
+    while (true)
+    {
+        if (root != NULL)
+        {
+            st.push(root);
+            root = root->left;
+        }
+        else
+        {
+            if (st.empty())
+                break;
+            Node *temp = st.top();
+            st.pop();
+            inOrder.push_back(temp->data);
+            if (temp->right)
+            {
+                root = temp->right;
+            }
+        }
+    }
+    return inOrder;
+}
+
+vector<int> preorderTraversal(Node *root)
+{
+
+    vector<int> preOrder;
+    stack<Node *> st;
+
+    if (!root)
+        return preOrder;
+
+    while (true)
+    {
+        if (root != NULL)
+        {
+            preOrder.push_back(root->data);
+            st.push(root);
+            root = root->left;
+        }
+        else
+        {
+            if (st.empty())
+                break;
+            Node *temp = st.top();
+            st.pop();
+            if (temp->right)
+            {
+                root = temp->right;
+            }
+        }
+    }
+
+    return preOrder;
+}
+
 int main()
 {
     Node *root = NULL;
@@ -114,17 +179,16 @@ int main()
     levelOrderTraversal(root);
     cout << endl;
 
-    cout << "Inorder traversal of binary tree is: " << endl;
-    inOrder(root);
-    cout << endl;
+    // cout << "Inorder traversal of binary tree is: " << endl;
+    // inOrder(root);
+    // cout << endl;
 
-    cout << "Preorder traversal of binary tree is: " << endl;
-    preOrder(root);
-    cout << endl;
+    // cout << "Preorder traversal of binary tree is: " << endl;
+    // preOrder(root);
+    // cout << endl;
 
-    cout << "Postorder traversal of binary tree is: " << endl;
-    postOrder(root);
-
+    // cout << "Postorder traversal of binary tree is: " << endl;
+    // postOrder(root);
 
     return 0;
 }
