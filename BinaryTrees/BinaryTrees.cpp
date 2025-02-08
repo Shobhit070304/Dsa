@@ -1,7 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <stack>
-#include<algorithm>
+#include <algorithm>
 using namespace std;
 
 class Node
@@ -170,32 +170,78 @@ vector<int> preorderTraversal(Node *root)
     return preOrder;
 }
 
-vector<int> postorderTraversal(Node* root) {
-    if(!root) return {};
+vector<int> postorderTraversal(Node *root)
+{
+    if (!root)
+        return {};
 
-    stack<Node*> st;
+    stack<Node *> st;
     vector<int> postOrder;
 
     st.push(root);
 
-    while(!st.empty()){
-        Node* temp = st.top();
+    while (!st.empty())
+    {
+        Node *temp = st.top();
         st.pop();
         postOrder.push_back(temp->data);
 
-        if(temp->left) st.push(temp->left);
-        if(temp->right) st.push(temp->right);
+        if (temp->left)
+            st.push(temp->left);
+        if (temp->right)
+            st.push(temp->right);
     }
 
     reverse(postOrder.begin(), postOrder.end());
     return postOrder;
 }
 
+void buildFromlevelOrderTraversal(Node *&root)
+{
+
+    int d;
+    cout << "Enter the value for root node : ";
+    cin >> d;
+
+    root = new Node(d);
+
+    queue<Node *> q;
+    q.push(root);
+
+    while (!q.empty())
+    {
+        Node *temp = q.front();
+        q.pop();
+
+        int leftData;
+        cout << "Enter value for left node of " << temp->data << " :";
+        cin >> leftData;
+
+        if (leftData != -1)
+        {
+            temp->left = new Node(leftData);
+            q.push(temp->left);
+        }
+
+        int rightData;
+        cout << "Enter value for right node of " << temp->data << " :";
+        cin >> rightData;
+
+        if (rightData != -1)
+        {
+            temp->right = new Node(rightData);
+            q.push(temp->right);
+        }
+    }
+}
+
 int main()
 {
     Node *root = NULL;
 
-    root = buildTree(root);
+    // root = buildTree(root);
+
+    buildFromlevelOrderTraversal(root);
 
     cout << "Level order traversal of binary tree is: " << endl;
     levelOrderTraversal(root);
