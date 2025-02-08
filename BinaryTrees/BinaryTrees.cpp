@@ -1,6 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <stack>
+#include<algorithm>
 using namespace std;
 
 class Node
@@ -167,6 +168,27 @@ vector<int> preorderTraversal(Node *root)
     }
 
     return preOrder;
+}
+
+vector<int> postorderTraversal(Node* root) {
+    if(!root) return {};
+
+    stack<Node*> st;
+    vector<int> postOrder;
+
+    st.push(root);
+
+    while(!st.empty()){
+        Node* temp = st.top();
+        st.pop();
+        postOrder.push_back(temp->data);
+
+        if(temp->left) st.push(temp->left);
+        if(temp->right) st.push(temp->right);
+    }
+
+    reverse(postOrder.begin(), postOrder.end());
+    return postOrder;
 }
 
 int main()
